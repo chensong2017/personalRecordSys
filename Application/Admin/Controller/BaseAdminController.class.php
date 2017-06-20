@@ -7,9 +7,9 @@
  */
 
 namespace Admin\Controller;
-use think\Controller;
+use Think\Controller\RestController;
 
-class BaseAdminController extends Controller{
+class BaseAdminController extends RestController {
     //验证登陆和权限
     public function _initialize(){
         if(!session('user')){

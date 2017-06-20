@@ -10,6 +10,12 @@
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="__PUBLIC__/DataTables/media/js/jquery.dataTables.js"></script>
 
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="__PUBLIC__/js/h-ui/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/css/h-ui/static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/css/h-ui/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="__PUBLIC__/js/h-ui/lib/laypage/1.2/laypage.js"></script>
+
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/h-ui/static/h-ui/css/H-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/h-ui/static/h-ui.admin/css/H-ui.admin.css" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/js/h-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
@@ -17,15 +23,21 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/h-ui/static/h-ui.admin/css/style.css" />
 </head>
 <body>
-<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span></div>
+<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <span class="btn btn-primary radius" onclick="product_add('添加产品','add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</span></span></div>
 <!--第二步：添加如下 HTML 代码-->
 <table id="table_id_example" class="display">
     <thead>
     <tr>
-        <th>Column 1</th>
-        <th>Column 2</th>
-        <th>Column 2</th>
-
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>籍贯</th>
+        <th>名族</th>
+        <th>手机号</th>
+        <th>政治面貌</th>
+        <th>学历</th>
+        <th>身份证号</th>
+        <th>邮箱</th>
     </tr>
     </thead>
 
@@ -39,8 +51,16 @@
         ajax: 'getList',
         columns: [
             { data: 'name' },
+            { data: 'sex' },
+            { data: 'age' },
+            { data: 'native_place' },
+            { data: 'nation' },
             { data: 'cellphone' },
-            { data: 'operate' }
+            { data: 'political_status' },
+            { data: 'educational_background' },
+            { data: 'id_number' },
+            { data: 'email' }
+
         ],
         language: {
             "sProcessing": "处理中...",
@@ -68,5 +88,18 @@
         },
 
     });
+
+    /*产品-添加*/
+    function product_add(title,url){
+
+        url="__MODULE__/PersonalRecord/"+url;
+        //alert(url);
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
 </script>
 </html>

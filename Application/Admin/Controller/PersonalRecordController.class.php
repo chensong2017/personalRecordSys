@@ -17,7 +17,8 @@ class PersonalRecordController extends BaseAdminController{
         $search=I('search');
         $search=$search['value'];
         $total=M('personal_record')->where($where)->count();
-        $list=M('personal_record')->where($where)->field('name,cellphone')->page($start,$length)->select();
+        $page=(int)($start/$length)+1;
+        $list=M('personal_record')->where($where)->field('name,sex,age,native_place,nation,cellphone,political_status,educational_background,ID_number,email')->page($page,$length)->select();
         $data['draw']=I("draw");
         $data['recordsFiltered']=(int)$total;
         $data["recordsTotal"]=(int)$total;
@@ -28,7 +29,11 @@ class PersonalRecordController extends BaseAdminController{
         $data["data"]=$list;
         echo json_encode($data);exit;
     }
-    public function add(){}
+    public function add(){
+        if($this->_method=='get'){
+            $this->display();
+        }
+    }
 
     public function editView(){}
 
