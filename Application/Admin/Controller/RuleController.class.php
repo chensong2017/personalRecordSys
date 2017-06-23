@@ -171,7 +171,7 @@ class RuleController extends Controller {
         if(empty($username)){
             $user_data='';
         }else{
-            $user_data=M('Users')->where(array('username'=>$username))->select();
+            $user_data=M('admin_user')->where(array('username'=>$username))->select();
         }
         $assign=array(
             'group_name'=>$group_name,
@@ -300,7 +300,7 @@ class RuleController extends Controller {
         }else{
             $id=I('get.id',0,'intval');
             // 获取用户数据
-            $user_data=M('Users')->find($id);
+            $user_data=M('admin_user')->find($id);
             // 获取已加入用户组
             $group_data=M('AuthGroupAccess')
                 ->where(array('uid'=>$id))
