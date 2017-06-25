@@ -18,7 +18,7 @@ class PersonalRecordController extends BaseAdminController{
         $search=$search['value'];
         $total=M('personal_record')->where($where)->count();
         $page=(int)($start/$length)+1;
-        $list=M('personal_record')->where($where)->field('name,sex,age,native_place,nation,cellphone,political_status,educational_background,ID_number,email')->page($page,$length)->select();
+        $list=M('personal_record')->where($where)->field('name,sex,age,native_place,nation,cellphone,political_status,degree,ID_number,email')->page($page,$length)->select();
         $data['draw']=I("draw");
         $data['recordsFiltered']=(int)$total;
         $data["recordsTotal"]=(int)$total;
@@ -29,9 +29,17 @@ class PersonalRecordController extends BaseAdminController{
         $data["data"]=$list;
         echo json_encode($data);exit;
     }
-    public function add(){
+    public function addBasic(){
         if($this->_method=='get'){
             $this->display();
+        }
+        elseif ($this->_method=='post'){
+            $record=I("post.");
+            $ret=M('personal_record')->add($record);
+            if($ret){
+                $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','recordId'=>$ret],'json');
+            }
+            $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
         }
     }
 
@@ -39,172 +47,33 @@ class PersonalRecordController extends BaseAdminController{
 
     public function delete(){}
 
-    public function upload(){
-        #!! 注意
-#!! 此文件只是个示例，不要用于真正的产品之中。
-#!! 不保证代码安全性。
-
-#!! IMPORTANT:
-#!! this file is just an example, it doesn't incorporate any security checks and
-#!! is not recommended to be used in production environment as it is. Be sure to
-#!! revise it and customize to your needs.
-
-
-// Make sure file is not cached (as it happens for example on iOS devices)
-        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-
-
-// Support CORS
-// header("Access-Control-Allow-Origin: *");
-// other CORS headers if any...
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            exit; // finish preflight CORS requests here
+    public function addImg(){
+        $recordId=I('get.recordId');
+        if($this->_method=='get'){
+            //获取已上传图片
+            $imgs=M('personal_record')->where(['id'=>$recordId])->field('photo')->select();
+            $imgs=substr($imgs[0]['photo'],1);
+            $imgs=explode(',',$imgs);
+            $this->assign('imgs',$imgs);
+            $this->assign('recordId',$recordId);
+            $this->display();exit();
         }
 
-
-        if ( !empty($_REQUEST[ 'debug' ]) ) {
-            $random = rand(0, intval($_REQUEST[ 'debug' ]) );
-            if ( $random === 0 ) {
-                header("HTTP/1.0 500 Internal Server Error");
-                exit;
-            }
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize   =     3145728 ;// 设置附件上传大小
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+        $upload->rootPath  =     __DIR__."/../../../upload/"; // 设置附件上传根目录
+        $upload->savePath  =     ''; // 设置附件上传（子）目录
+        // 上传文件
+        //echo $upload->rootPath;exit();
+        $info   =   $upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            $this->error();
+        }else{// 上传成功
+            $savePath=$info['file']['savepath'].$info['file']['savename'];
+            M()->execute("update  personal_record set photo=concat(photo,',','$savePath') where id=$recordId");
+            $this->response(['resultCode'=>1,'resultMsg'=>'上传成功！','savePath'=>$savePath],'json');
+            //print_r($info);
         }
-
-// header("HTTP/1.0 500 Internal Server Error");
-// exit;
-
-
-// 5 minutes execution time
-        @set_time_limit(5 * 60);
-
-// Uncomment this one to fake upload time
-// usleep(5000);
-
-// Settings
-// $targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
-        $targetDir = 'upload_tmp';
-        $uploadDir = 'upload';
-
-        $cleanupTargetDir = true; // Remove old files
-        $maxFileAge = 5 * 3600; // Temp file age in seconds
-
-
-// Create target dir
-        if (!file_exists($targetDir)) {
-            @mkdir($targetDir);
-        }
-
-// Create target dir
-        if (!file_exists($uploadDir)) {
-            @mkdir($uploadDir);
-        }
-
-// Get a file name
-        if (isset($_REQUEST["name"])) {
-            $fileName = $_REQUEST["name"];
-        } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
-        } else {
-            $fileName = uniqid("file_");
-        }
-
-        $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
-        $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
-
-// Chunking might be enabled
-        $chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
-        $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 1;
-
-
-// Remove old temp files
-        if ($cleanupTargetDir) {
-            if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
-            }
-
-            while (($file = readdir($dir)) !== false) {
-                $tmpfilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
-
-                // If temp file is current file proceed to the next
-                if ($tmpfilePath == "{$filePath}_{$chunk}.part" || $tmpfilePath == "{$filePath}_{$chunk}.parttmp") {
-                    continue;
-                }
-
-                // Remove temp file if it is older than the max age and is not the current file
-                if (preg_match('/\.(part|parttmp)$/', $file) && (@filemtime($tmpfilePath) < time() - $maxFileAge)) {
-                    @unlink($tmpfilePath);
-                }
-            }
-            closedir($dir);
-        }
-
-
-// Open temp file
-        if (!$out = @fopen("{$filePath}_{$chunk}.parttmp", "wb")) {
-            die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-        }
-
-        if (!empty($_FILES)) {
-            if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
-            }
-
-            // Read binary input stream and append it to temp file
-            if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-            }
-        } else {
-            if (!$in = @fopen("php://input", "rb")) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-            }
-        }
-
-        while ($buff = fread($in, 4096)) {
-            fwrite($out, $buff);
-        }
-
-        @fclose($out);
-        @fclose($in);
-
-        rename("{$filePath}_{$chunk}.parttmp", "{$filePath}_{$chunk}.part");
-
-        $index = 0;
-        $done = true;
-        for( $index = 0; $index < $chunks; $index++ ) {
-            if ( !file_exists("{$filePath}_{$index}.part") ) {
-                $done = false;
-                break;
-            }
-        }
-        if ( $done ) {
-            if (!$out = @fopen($uploadPath, "wb")) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-            }
-
-            if ( flock($out, LOCK_EX) ) {
-                for( $index = 0; $index < $chunks; $index++ ) {
-                    if (!$in = @fopen("{$filePath}_{$index}.part", "rb")) {
-                        break;
-                    }
-
-                    while ($buff = fread($in, 4096)) {
-                        fwrite($out, $buff);
-                    }
-
-                    @fclose($in);
-                    @unlink("{$filePath}_{$index}.part");
-                }
-
-                flock($out, LOCK_UN);
-            }
-            @fclose($out);
-        }
-
-        // Return Success JSON-RPC response
-        die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
     }
 }

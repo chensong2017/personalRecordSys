@@ -13,7 +13,7 @@ class BaseAdminController extends RestController {
     //验证登陆和权限
     public function _initialize(){
         if(!session('user')){
-            $this->display('Admin/index/login');
+            $this->display('index/login');
         }
         //验证权限
         $auth=new \Think\Auth();

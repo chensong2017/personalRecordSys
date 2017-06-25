@@ -44,7 +44,7 @@
 </table>
 </body>
 <script>
-    $('#table_id_example').DataTable({
+   var recordTable=$('#table_id_example').DataTable({
         //开启服务器模式
         serverSide: true,
         //数据来源（包括处理分页，排序，过滤） ，即url，action，接口，等等
@@ -57,7 +57,7 @@
             { data: 'nation' },
             { data: 'cellphone' },
             { data: 'political_status' },
-            { data: 'educational_background' },
+            { data: 'degree' },
             { data: 'id_number' },
             { data: 'email' }
 

@@ -33,27 +33,27 @@
 <article class="page-container">
 	<ul class="nav nav-tabs">
 		<li role="presentation" class="active"><a href="#">添加基本信息</a></li>
-		<li role="presentation"><a href="addImg.html">添加相册</a></li>
-		<li role="presentation"><a href="addWork.html">添加工作经验</a></li>
-		<li role="presentation"><a href="addEducation.html">添加教育经验</a></li>
+		<li role="presentation"><a id="addImg" href="javascript:alert('请先添加基本信息！')">添加相册</a></li>
+		<li role="presentation"><a id="addWork" href="javascript:alert('请先添加基本信息！')">添加工作经验</a></li>
+		<li role="presentation"><a id="addEducation" href="javascript:alert('请先添加基本信息！')">添加教育经验</a></li>
 	</ul>
-	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+	<form action="" method="post" class="form form-horizontal" id="form-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="username" name="username">
+				<input type="text" class="input-text" value="" placeholder="" id="name" name="name">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div id="sex" class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="sex" type="radio" id="sex-1" checked>
+					<input name="sex" type="radio" id="sex-1" value="1" checked>
 					<label for="sex-1">男</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="sex-2" name="sex">
+					<input name="sex" type="radio" id="sex-2" value="0" name="sex">
 					<label for="sex-2">女</label>
 				</div>
 			</div>
@@ -62,14 +62,21 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>年龄：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="mobile" name="mobile">
+				<input  type="text" class="input-text" value="" placeholder="" id="age" name="age">
 			</div>
 		</div>
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="mobile" name="mobile">
+				<input type="text" class="input-text" value="" placeholder="" id="cellphone" name="cellphone">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>座机号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="telphone" name="telphone">
 			</div>
 		</div>
 
@@ -79,29 +86,214 @@
 				<input type="text" class="input-text" placeholder="@" name="email" id="email">
 			</div>
 		</div>
+
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">附件：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-				<input type="file" multiple name="file-2" class="input-file">
-				</span> </div>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>现居住地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select name="province3"></select><select name="city3"></select><select name="area3"></select>
+				<input type="text" class="input-text"  name="live_address" id="live_address">
+			</div>
 		</div>
+
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">所在城市：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select" size="1" name="city">
-					<option value="" selected>请选择城市</option>
-					<option value="1">北京</option>
-					<option value="2">上海</option>
-					<option value="3">广州</option>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>QQ：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="qq" id="qq">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>微信：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="wechat" id="wechat">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>籍贯：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select name="province"></select><select name="city"></select><select name="area"></select><br>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>出生日期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="birthday" class="input-text Wdate" style="width:180px;">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>身高(厘米)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="height" id="height">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>专业：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="major" id="major">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>爱好：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="hobby" id="hobby">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>特长：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="specialty" id="specialty">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">个人简介：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="profile" id="profile" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" ></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/500</p>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>英语能力：</label>
+			<div id="English_level" class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="English_level" type="radio" id="English_level-1" checked>
+					<label for="English_level-1">一般</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="English_level-2" name="English_level">
+					<label for="English_level-2">良好</label>
+				</div>
+				<div class="radio-box">
+					<input name="English_level" type="radio" id="English_level-3">
+					<label for="English_level-1">熟练</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="English_level-4" name="English_level">
+					<label for="English_level-2">精通</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>计算机能力：</label>
+			<div id="computer_Level" class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="computer_Level" type="radio" id="computer_Level-1" checked>
+					<label for="computer_Level-1">一般</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="computer_Level-2" name="computer_Level">
+					<label for="computer_Level-2">良好</label>
+				</div>
+				<div class="radio-box">
+					<input name="computer_Level" type="radio" id="computer_Level-3">
+					<label for="computer_Level-1">熟练</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="computer_Level-4" name="computer_Level">
+					<label for="computer_Level-2">精通</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>婚姻状况：</label>
+			<div id="marital_status" class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="marital_status" type="radio" id="marital_status-1" checked>
+					<label for="marital_status-1">未婚</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="marital_status-2" name="marital_status">
+					<label for="marital_status-2">已婚</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="marital_status-3" name="marital_status">
+					<label for="marital_status-2">离异</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>民族：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="nation" id="nation">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>毕业院校：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="graduate_institutions" id="graduate_institutions">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>毕业时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="graduation_time" class="input-text Wdate" style="width:180px;">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>户口所在地：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select name="province1"></select><select name="city1"></select><select name="area1"></select><br>
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>身份证号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="id_number" id="id_number">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>政治面貌：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select id="political_status">
+					<option value="" selected="selected">请选择</option>
+					<option value ="volvo">中共党员(含预备党员)</option>
+					<option value ="saab">团员</option>
+					<option value="opel">群众</option>
+					<option value="audi">民主党派</option>
+					<option value="audi">无党派人士</option>
 				</select>
-				</span> </div>
+			</div>
 		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学历：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select id="degree">
+					<option value="" selected="selected">请选择</option>
+					<option value="5">大专</option>
+					<option value="4">本科</option>
+					<option value="3">硕士</option>
+					<option value="1">博士</option>
+					<option value="10">MBA</option>
+					<option value="11">EMBA</option>
+					<option value="12">中专</option>
+					<option value="13">中技</option>
+					<option value="7">高中</option>
+					<option value="9">初中</option>
+					<option value="8">其他</option>
+				</select>
+			</div>
+		</div>
+
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">备注：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="beizhu" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+				<textarea name="remark"  id="remark" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
 			</div>
 		</div>
@@ -124,6 +316,8 @@
 <script type="text/javascript" src="__PUBLIC__/js/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/h-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/h-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script language="javascript" src="__PUBLIC__/js/PCASClass.js"></script>
+<script type="text/javascript" charset="utf8" src="__PUBLIC__/DataTables/media/js/jquery.dataTables.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="__PUBLIC__/bootstrap-3.3.5/js/bootstrap.min.js"  crossorigin="anonymous"></script>
@@ -136,40 +330,60 @@
             increaseArea: '20%'
         });
 
-        $("#form-member-add").validate({
+        $("#form-add").validate({
             rules:{
-                username:{
-                    required:true,
-                    minlength:2,
-                    maxlength:16
-                },
-                sex:{
-                    required:true,
-                },
-                mobile:{
-                    required:true,
-                    isMobile:true,
-                },
-                email:{
-                    required:true,
-                    email:true,
-                },
-                uploadfile:{
-                    required:true,
-                },
+
 
             },
             onkeyup:false,
             focusCleanup:true,
             success:"valid",
             submitHandler:function(form){
-                //$(form).ajaxSubmit();
-                var index = parent.layer.getFrameIndex(window.name);
-                //parent.$('.btn-refresh').click();
-                parent.layer.close(index);
+                //alert($("div[class='iradio-blue checked']").find("input").val());
+                live_address=$("select[name='province3']").find("option:selected").text()+","
+					+$("select[name='city3']").find("option:selected").text()+","
+					+$("select[name='area3']").find("option:selected").text()
+					+$("#live_address").val();
+                native_place=$("select[name='province']").find("option:selected").text()+","
+                    +$("select[name='city']").find("option:selected").text()+","
+					+$("select[name='area']").find("option:selected").text();
+                registered_address=$("select[name='province1']").find("option:selected").text()+","
+                    +$("select[name='city1']").find("option:selected").text()+","
+                    +$("select[name='area1']").find("option:selected").text();
+                //alert(live_address);
+                $(form).ajaxSubmit({
+                    data:{
+                        sex:$("#sex div[class='iradio-blue checked']").find("input").val(),
+                        live_address:live_address,
+                        native_place:native_place,
+                        English_level:$("#English_level div[class='iradio-blue checked']").parent().find("label").text(),
+                        computer_Level:$("#computer_Level div[class='iradio-blue checked']").parent().find("label").text(),
+                        marital_status:$("#marital_status div[class='iradio-blue checked']").parent().find("label").text(),
+                        registered_address:registered_address,
+                        political_status:$("#political_status").find("option:selected").text(),
+                        degree:$("#degree").find("option:selected").text()
+					},
+					success:function (data) {
+					    alert(data.resultMsg);
+					    if(data.resultCode==1){
+                            //重新绘制表格数据
+                            window.parent.recordTable.ajax.reload();
+                            //设置上传图片、工作经验、教育背景的url
+							$("#addImg").attr('href','addImg?recordId='+data.recordId);
+                            $("#addWork").attr('href','addWork?recordId='+data.recordId);
+                            $("#addEducation").attr('href','addEducation?recordId='+data.recordId);
+						}
+
+                    }
+				});
             }
         });
+
+
     });
+    new PCAS("province","city","area");
+    new PCAS("province1","city1","area1");
+    new PCAS("province3","city3","area3");
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>
