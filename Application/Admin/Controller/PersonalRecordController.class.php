@@ -30,7 +30,14 @@ class PersonalRecordController extends BaseAdminController{
         echo json_encode($data);exit;
     }
     public function addBasic(){
+        $recordId=I('get.recordId');
         if($this->_method=='get'){
+            if(!empty($recordId)){
+                $record=M('personal_record')->where(['id'=>$recordId])->select();
+                $this->assign('recordId',$recordId);
+                $this->assign('record',$record[0]);
+            }
+
             $this->display();
         }
         elseif ($this->_method=='post'){
@@ -52,8 +59,15 @@ class PersonalRecordController extends BaseAdminController{
         if($this->_method=='get'){
             //获取已上传图片
             $imgs=M('personal_record')->where(['id'=>$recordId])->field('photo')->select();
-            $imgs=substr($imgs[0]['photo'],1);
-            $imgs=explode(',',$imgs);
+            //如果第一个字符是","则去掉
+            if(substr($imgs[0]['photo'],0,1)==','){
+                $imgs=substr($imgs[0]['photo'],1);
+            }
+            if(!empty($imgs)){
+                $imgs=explode(',',$imgs);
+            }else{
+                $imgs=array();
+            }
             $this->assign('imgs',$imgs);
             $this->assign('recordId',$recordId);
             $this->display();exit();
@@ -75,5 +89,15 @@ class PersonalRecordController extends BaseAdminController{
             $this->response(['resultCode'=>1,'resultMsg'=>'上传成功！','savePath'=>$savePath],'json');
             //print_r($info);
         }
+    }
+
+    public function deleteImg($recordId){
+        $filePath=I('get.filePath');
+        //删除文件
+        $path=realpath(str_replace('/','\\',APP_PATH.'../upload/'.$filePath));
+        unlink($path);
+        $filePath=",$filePath";
+        M('personal_record')->execute("update  personal_record set photo=replace(photo,'$filePath','') where id=%d",$recordId);
+        $this->response(['resultCode'=>1,'resultMsg'=>'删除成功！'],'json');
     }
 }

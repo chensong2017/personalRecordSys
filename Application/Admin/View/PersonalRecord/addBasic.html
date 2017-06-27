@@ -32,16 +32,24 @@
 
 <article class="page-container">
 	<ul class="nav nav-tabs">
-		<li role="presentation" class="active"><a href="#">添加基本信息</a></li>
-		<li role="presentation"><a id="addImg" href="javascript:alert('请先添加基本信息！')">添加相册</a></li>
-		<li role="presentation"><a id="addWork" href="javascript:alert('请先添加基本信息！')">添加工作经验</a></li>
-		<li role="presentation"><a id="addEducation" href="javascript:alert('请先添加基本信息！')">添加教育经验</a></li>
+		<if condition="empty($recordId)">
+				<li role="presentation" class="active"><a href="#">添加基本信息</a></li>
+				<li role="presentation"><a id="addImg" href="javascript:alert('请先添加基本信息！')">添加相册</a></li>
+				<li role="presentation"><a id="addWork" href="javascript:alert('请先添加基本信息！')">添加工作经验</a></li>
+				<li role="presentation"><a id="addEducation" href="javascript:alert('请先添加基本信息！')">添加教育经验</a></li>
+			<else />
+				<li role="presentation" class="active"><a href="addBasic.html?recordId={$recordId}">添加基本信息</a></li>
+				<li role="presentation" id="addImg"><a href="addImg.html?recordId={$recordId}">添加相册</a></li>
+				<li role="presentation"><a  id="addWork" href="addWork.html?recordId={$recordId}">添加工作经验</a></li>
+				<li role="presentation"><a  id="addEducation" href="addEducation.html?recordId={$recordId}">添加教育经验</a></li>
+		</if>
+
 	</ul>
 	<form action="" method="post" class="form form-horizontal" id="form-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="name" name="name">
+				<input type="text" class="input-text" value="{$record['name']}" placeholder="" id="name" name="name" >
 			</div>
 		</div>
 
@@ -49,7 +57,7 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 			<div id="sex" class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="sex" type="radio" id="sex-1" value="1" checked>
+					<input name="sex" type="radio" id="sex-1" value="1">
 					<label for="sex-1">男</label>
 				</div>
 				<div class="radio-box">
@@ -62,92 +70,92 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>年龄：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input  type="text" class="input-text" value="" placeholder="" id="age" name="age">
+				<input  type="text" class="input-text" value="{$record['age']}" placeholder="" id="age" name="age">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="cellphone" name="cellphone">
+				<input type="text" class="input-text" value="{$record['cellphone']}" placeholder="" id="cellphone" name="cellphone">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>座机号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="telphone" name="telphone">
+				<input type="text" class="input-text" value="{$record['cellphone']}" placeholder="" id="telphone" name="telphone">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" placeholder="@" name="email" id="email">
+				<input type="text" class="input-text" value="{$record['email']}"  placeholder="@" name="email" id="email">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>现居住地址：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select name="province3"></select><select name="city3"></select><select name="area3"></select>
-				<input type="text" class="input-text"  name="live_address" id="live_address">
+				<select name="province1"></select><select name="city1"></select><select name="area1"></select>
+				<input type="text" class="input-text" value="{$record['live_address']}" name="live_address" id="live_address">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>QQ：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="qq" id="qq">
+				<input type="text" class="input-text" value="{$record['qq']}" name="qq" id="qq">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>微信：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="wechat" id="wechat">
+				<input type="text" class="input-text" value="{$record['wechat']}" name="wechat" id="wechat">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>籍贯：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select name="province"></select><select name="city"></select><select name="area"></select><br>
+				<select name="province2"></select><select name="city2"></select><select name="area2"></select><br>
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>出生日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="birthday" class="input-text Wdate" style="width:180px;">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="birthday" class="input-text Wdate"  value="{$record['birthday']}" style="width:180px;">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>身高(厘米)：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="height" id="height">
+				<input type="text" class="input-text" value="{$record['height']}" name="height" id="height">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>专业：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="major" id="major">
+				<input type="text" class="input-text" value="{$record['major']}"  name="major" id="major">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>爱好：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="hobby" id="hobby">
+				<input type="text" class="input-text" value="{$record['hobby']}" name="hobby" id="hobby">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>特长：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="specialty" id="specialty">
+				<input type="text" class="input-text" value="{$record['specialty']}" name="specialty" id="specialty">
 			</div>
 		</div>
 
@@ -163,20 +171,20 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>英语能力：</label>
 			<div id="English_level" class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="English_level" type="radio" id="English_level-1" checked>
+					<input name="English_level" type="radio" id="English_level-1">
 					<label for="English_level-1">一般</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="English_level-2" name="English_level">
+					<input type="radio"  name="English_level-2" id="English_level-2">
 					<label for="English_level-2">良好</label>
 				</div>
 				<div class="radio-box">
 					<input name="English_level" type="radio" id="English_level-3">
-					<label for="English_level-1">熟练</label>
+					<label for="English_level-3">熟练</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="English_level-4" name="English_level">
-					<label for="English_level-2">精通</label>
+					<input type="radio"  name="English_level-4" id="English_level-4">
+					<label for="English_level-4">精通</label>
 				</div>
 			</div>
 		</div>
@@ -185,20 +193,20 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>计算机能力：</label>
 			<div id="computer_Level" class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="computer_Level" type="radio" id="computer_Level-1" checked>
+					<input name="computer_Level" type="radio" id="computer_Level-1">
 					<label for="computer_Level-1">一般</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="computer_Level-2" name="computer_Level">
+					<input type="radio"  name="computer_Leve-2" id="computer_Level-2">
 					<label for="computer_Level-2">良好</label>
 				</div>
 				<div class="radio-box">
 					<input name="computer_Level" type="radio" id="computer_Level-3">
-					<label for="computer_Level-1">熟练</label>
+					<label for="computer_Level-3">熟练</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="computer_Level-4" name="computer_Level">
-					<label for="computer_Level-2">精通</label>
+					<input type="radio"  name="computer_Level-4" id="computer_Level-4">
+					<label for="computer_Level-4">精通</label>
 				</div>
 			</div>
 		</div>
@@ -207,7 +215,7 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>婚姻状况：</label>
 			<div id="marital_status" class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="marital_status" type="radio" id="marital_status-1" checked>
+					<input name="marital_status" type="radio" id="marital_status-1">
 					<label for="marital_status-1">未婚</label>
 				</div>
 				<div class="radio-box">
@@ -224,35 +232,35 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>民族：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="nation" id="nation">
+				<input type="text" class="input-text" value="{$record['nation']}"  name="nation" id="nation">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>毕业院校：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="graduate_institutions" id="graduate_institutions">
+				<input type="text" class="input-text" value="{$record['graduate_institutions']}" name="graduate_institutions" id="graduate_institutions">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>毕业时间：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="graduation_time" class="input-text Wdate" style="width:180px;">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" value="{$record['graduation_time']}" id="graduation_time" class="input-text Wdate" style="width:180px;">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>户口所在地：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<select name="province1"></select><select name="city1"></select><select name="area1"></select><br>
+				<select name="province3"></select><select name="city3"></select><select name="area3"></select><br>
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>身份证号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text"  name="id_number" id="id_number">
+				<input type="text" class="input-text" value="{$record['id_number']}" name="id_number" id="id_number">
 			</div>
 		</div>
 
@@ -293,13 +301,13 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">备注：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="remark"  id="remark" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+				<textarea name="remark"  id="remark" cols="" rows="" class="textarea"  value="{$record['remark']}" placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
 			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保存&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
@@ -324,7 +332,7 @@
 
 <script type="text/javascript">
     $(function(){
-        $('.skin-minimal input').iCheck({
+      $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
             increaseArea: '20%'
@@ -340,16 +348,16 @@
             success:"valid",
             submitHandler:function(form){
                 //alert($("div[class='iradio-blue checked']").find("input").val());
-                live_address=$("select[name='province3']").find("option:selected").text()+","
-					+$("select[name='city3']").find("option:selected").text()+","
-					+$("select[name='area3']").find("option:selected").text()
+                live_address=$("select[name='province1']").find("option:selected").text()+","
+					+$("select[name='city1']").find("option:selected").text()+","
+					+$("select[name='area1']").find("option:selected").text()
 					+$("#live_address").val();
-                native_place=$("select[name='province']").find("option:selected").text()+","
-                    +$("select[name='city']").find("option:selected").text()+","
-					+$("select[name='area']").find("option:selected").text();
-                registered_address=$("select[name='province1']").find("option:selected").text()+","
-                    +$("select[name='city1']").find("option:selected").text()+","
-                    +$("select[name='area1']").find("option:selected").text();
+                native_place=$("select[name='province2']").find("option:selected").text()+","
+                    +$("select[name='city2']").find("option:selected").text()+","
+					+$("select[name='area2']").find("option:selected").text();
+                registered_address=$("select[name='province3']").find("option:selected").text()+","
+                    +$("select[name='city3']").find("option:selected").text()+","
+                    +$("select[name='area3']").find("option:selected").text();
                 //alert(live_address);
                 $(form).ajaxSubmit({
                     data:{
@@ -380,10 +388,81 @@
         });
 
 
+        var recordId='{$recordId}';
+        //alert(recordId);
+		//修改时负责表单回显逻辑
+        if(!isNaN(parseInt(recordId))){
+            live_address="{$record['live_address']}";
+            live_address=live_address.split(",");
+            new PCAS("province1","city1","area1",live_address[0],live_address[1],live_address[2]);
+            native_place="{$record['native_place']}";
+            native_place=native_place.split(",");
+            new PCAS("province2","city2","area2",native_place[0],native_place[1],native_place[2]);
+            registered_address="{$record['registered_address']}";
+            registered_address=registered_address.split(",");
+            new PCAS("province3","city3","area3",registered_address[0],registered_address[1],registered_address[2]);
+
+			$("div").removeClass("checked");
+            switch("{$record['sex']}"){
+				case "1":
+				    $("#sex-1").parent().addClass("checked");
+                case "0":
+                    $("#sex-2").parent().addClass("checked");
+			}
+
+            switch("{$record['english_level']}"){
+                case "一般":
+                    $("#English_level-1").parent().addClass("checked");
+                    break;
+                case "良好":
+                    $("#English_level-2").parent().addClass("checked");
+                    break;
+                case "熟练":
+                    $("#English_level-3").parent().addClass("checked");
+                    break;
+                case "精通":
+                    $("#English_level-4").parent().addClass("checked");
+            }
+
+            switch("{$record['computer_level']}"){
+                case "一般":
+                    $("#computer_Level-1").parent().addClass("checked");
+                    break;
+                case "良好":
+                    $("#computer_Level-2").parent().addClass("checked");
+                    break;
+                case "熟练":
+                    $("#computer_Level-3").parent().addClass("checked");
+                    break;
+                case "精通":
+                    $("#computer_Level-4").parent().addClass("checked");
+            }
+
+            switch("{$record['marital_status']}"){
+                case "未婚":
+                    $("#marital_status-1").parent().addClass("checked");
+                case "已婚":
+                    $("#marital_status-2").parent().addClass("checked");
+                case "离异":
+                    $("#marital_status-3").parent().addClass("checked");
+            }
+
+            political_status="{$record['political_status']}";
+            $("#political_status").find("option[text="+political_status+"]").attr("selected",true);
+            degree="{$record['degree']}";
+            $("#degree").find("option[text="+degree+"]").attr("selected",true);
+
+            $("#profile").val("aaa");
+
+		}
+		else{
+            new PCAS("province1","city1","area1");
+            new PCAS("province2","city2","area2");
+            new PCAS("province3","city3","area3");
+		}
+
     });
-    new PCAS("province","city","area");
-    new PCAS("province1","city1","area1");
-    new PCAS("province3","city3","area3");
+
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

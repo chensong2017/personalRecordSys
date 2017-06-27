@@ -1,10 +1,11 @@
 <?php
-namespace admin\Model;
-use Common\Model\BaseModel;
+namespace Admin\Model;
+use Admin\Model\AuthRuleModel;
 /**
  * ModelName
  */
-class UsersModel extends BaseModel{
+class UsersModel extends BaseModel {
+    protected $tableName='admin_user';
     // 自动验证
     protected $_validate=array(
         array('username','require','用户名必须',0,'',3), // 验证字段必填
@@ -20,13 +21,14 @@ class UsersModel extends BaseModel{
      * 添加用户
      */
     public function addData($data){
+        $data['password']=md5($data['password']);
         // 对data数据进行验证
-        if(!$data=$this->create($data)){
+        if(!$data=M('admin_user')->create($data)){
             // 验证不通过返回错误
             return false;
         }else{
             // 验证通过
-            $result=$this->add($data);
+            $result=M('admin_user')->add($data);
             return $result;
         }
     }
