@@ -40,7 +40,7 @@
 			<else />
 				<li role="presentation" class="active"><a href="addBasic.html?recordId={$recordId}">添加基本信息</a></li>
 				<li role="presentation" id="addImg"><a href="addImg.html?recordId={$recordId}">添加相册</a></li>
-				<li role="presentation"><a  id="addWork" href="addWork.html?recordId={$recordId}">添加工作经验</a></li>
+				<li role="presentation"><a  id="addWork" href="workExperience.html?recordId={$recordId}">添加工作经验</a></li>
 				<li role="presentation"><a  id="addEducation" href="addEducation.html?recordId={$recordId}">添加教育经验</a></li>
 		</if>
 
@@ -127,7 +127,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>出生日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="birthday" class="input-text Wdate"  value="{$record['birthday']}" style="width:180px;">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" id="birthday" name="birthday" class="input-text Wdate"  value="{$record['birthday']}" style="width:180px;">
 			</div>
 		</div>
 
@@ -246,7 +246,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>毕业时间：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" value="{$record['graduation_time']}" id="graduation_time" class="input-text Wdate" style="width:180px;">
+				<input type="text" onfocus="WdatePicker({lang:'zh-cn'})" value="{$record['graduation_time']}" name="graduation_time" id="graduation_time" class="input-text Wdate" style="width:180px;">
 			</div>
 		</div>
 
@@ -374,12 +374,12 @@
 					success:function (data) {
 					    alert(data.resultMsg);
 					    if(data.resultCode==1){
-                            //重新绘制表格数据
-                            window.parent.recordTable.ajax.reload();
                             //设置上传图片、工作经验、教育背景的url
-							$("#addImg").attr('href','addImg?recordId='+data.recordId);
+                            $("#addImg").attr('href','addImg?recordId='+data.recordId);
                             $("#addWork").attr('href','addWork?recordId='+data.recordId);
                             $("#addEducation").attr('href','addEducation?recordId='+data.recordId);
+                            //重新绘制表格数据
+                            window.parent.recordTable.ajax.reload();
 						}
 
                     }
@@ -448,12 +448,11 @@
             }
 
             political_status="{$record['political_status']}";
-            $("#political_status").find("option[text="+political_status+"]").attr("selected",true);
+            $("#political_status").find("option:contains('"+political_status+"')").attr("selected",true);
             degree="{$record['degree']}";
-            $("#degree").find("option[text="+degree+"]").attr("selected",true);
-
-            $("#profile").val("aaa");
-
+            $("#degree").find("option:contains('"+degree+"')").attr("selected",true);
+            $("#profile").text("{$record['profile']}");
+            $("#remark").text("{$record['remark']}");
 		}
 		else{
             new PCAS("province1","city1","area1");

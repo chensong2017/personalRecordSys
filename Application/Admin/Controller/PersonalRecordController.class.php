@@ -100,4 +100,52 @@ class PersonalRecordController extends BaseAdminController{
         M('personal_record')->execute("update  personal_record set photo=replace(photo,'$filePath','') where id=%d",$recordId);
         $this->response(['resultCode'=>1,'resultMsg'=>'删除成功！'],'json');
     }
+
+    public function workExperience($method='get'){
+        $recordId=I('get.recordId');
+        $id=I('get.id');
+        //get查询视图或者详情
+        if($this->_method=='get'){
+            //无id查询视图
+            if(empty($id)){
+                if(!empty($recordId)){
+                    $list=M('work_experience')->where(['record_id'=>$recordId])->select();
+                    $this->assign('recordId',$recordId);
+                    $this->assign('list',$list);
+                }
+                $this->display();
+            }
+            //有id查询详情
+            else{
+                if($method=='get'){
+                    $work=M('work_experience')->where(['id'=>$id])->select();
+                    $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','data'=>$work[0]],'json');
+                }
+                elseif ($method=='delete'){
+                    $ret=M('work_experience')->where(['id'=>$id])->delete();
+                    if($ret){
+                        $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','recordId'=>$ret],'json');
+                    }
+                    $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+                }
+            }
+        }
+        //post添加或者修改
+        elseif ($this->_method=='post'){
+            $work=I("post.");
+            $ret=M('work_experience')->add($work);
+            if($ret){
+                $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','id'=>$ret],'json');
+            }
+            $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+        }
+    }
+
+    public function delWork($id){
+        $ret=M('work_experience')->where(['id'=>$id])->delete();
+        if($ret){
+            $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','recordId'=>$ret],'json');
+        }
+        $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+    }
 }
