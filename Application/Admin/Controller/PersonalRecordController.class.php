@@ -18,13 +18,15 @@ class PersonalRecordController extends BaseAdminController{
         $search=$search['value'];
         $total=M('personal_record')->where($where)->count();
         $page=(int)($start/$length)+1;
-        $list=M('personal_record')->where($where)->field('name,sex,age,native_place,nation,cellphone,political_status,degree,ID_number,email')->page($page,$length)->select();
+        $list=M('personal_record')->where($where)->field('id,name,sex,age,native_place,nation,cellphone,political_status,graduate_institutions,degree,id_number,email')->page($page,$length)->select();
         $data['draw']=I("draw");
         $data['recordsFiltered']=(int)$total;
         $data["recordsTotal"]=(int)$total;
 
         foreach ($list as $key=>$val){
-            $list[$key]['operate']='<a href="http://www.w3school.com.cn">delete</a>';
+            $id=$val['id'];
+            $list[$key]['operate']="<a title='编辑' href='javascript:;' onclick='edit($id)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6df;</i></a>
+                        <a title='删除' href='javascript:;' onclick='del(this,$id)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>";
         }
         $data["data"]=$list;
         echo json_encode($data);exit;
@@ -49,10 +51,15 @@ class PersonalRecordController extends BaseAdminController{
             $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
         }
     }
+    //删除记录
+    public function delete(){
+        $recordId=I('get.recordId');
+        $imgs=M()->where(['id'=>$recordId])->field()->select();
+        $ret1=M()->where(['id'=>$recordId])->delete();
+        $ret2=M()->where(['id'=>$recordId])->delete();
+        $ret3=M()->where(['id'=>$recordId])->delete();
 
-    public function editView(){}
-
-    public function delete(){}
+    }
 
     public function addImg(){
         $recordId=I('get.recordId');
@@ -133,7 +140,13 @@ class PersonalRecordController extends BaseAdminController{
         //post添加或者修改
         elseif ($this->_method=='post'){
             $work=I("post.");
-            $ret=M('work_experience')->add($work);
+            //添加
+            if(empty($id)){
+                $ret=M('work_experience')->add($work);
+            }
+            else{
+                $ret=M('work_experience')->where(['id'=>$id])->save($work);
+            }
             if($ret){
                 $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','id'=>$ret],'json');
             }
@@ -141,11 +154,50 @@ class PersonalRecordController extends BaseAdminController{
         }
     }
 
-    public function delWork($id){
-        $ret=M('work_experience')->where(['id'=>$id])->delete();
-        if($ret){
-            $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','recordId'=>$ret],'json');
+    public function eduExperience($method='get'){
+        $recordId=I('get.recordId');
+        $id=I('get.id');
+        //get查询视图或者详情
+        if($this->_method=='get'){
+            //无id查询视图
+            if(empty($id)){
+                if(!empty($recordId)){
+                    $list=M('edu_experience')->where(['record_id'=>$recordId])->select();
+                    $this->assign('recordId',$recordId);
+                    $this->assign('list',$list);
+                }
+                $this->display();
+            }
+            //有id查询详情
+            else{
+                if($method=='get'){
+                    $work=M('edu_experience')->where(['id'=>$id])->select();
+                    $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','data'=>$work[0]],'json');
+                }
+                elseif ($method=='delete'){
+                    $ret=M('edu_experience')->where(['id'=>$id])->delete();
+                    if($ret){
+                        $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','recordId'=>$ret],'json');
+                    }
+                    $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+                }
+            }
         }
-        $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+        //post添加或者修改
+        elseif ($this->_method=='post'){
+            $work=I("post.");
+            //添加
+            if(empty($id)){
+                $ret=M('edu_experience')->add($work);
+            }
+            else{
+                $ret=M('edu_experience')->where(['id'=>$id])->save($work);
+            }
+            if($ret){
+                $this->response(['resultCode'=>1,'resultMsg'=>'操作成功！','id'=>$ret],'json');
+            }
+            $this->response(['resultCode'=>-1,'resultMsg'=>'操作失败！'],'json');
+        }
     }
+
 }

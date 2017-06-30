@@ -33,17 +33,43 @@
         <th>年龄</th>
         <th>籍贯</th>
         <th>名族</th>
+        <th>毕业院校</th>
+        <th>学历</th>
         <th>手机号</th>
         <th>政治面貌</th>
-        <th>学历</th>
         <th>身份证号</th>
         <th>邮箱</th>
+        <th>操作</th>
     </tr>
     </thead>
 
 </table>
 </body>
 <script>
+
+    function del($this,id){
+        if(confirm("确定是要删除吗？")){
+            $($this).parent().parent().remove();
+            $.get('./delete?recordId='+id,function (data) {
+                if(data.resultCode==-1){
+                    alert(data.resultMsg);
+                }
+            });
+        }
+    }
+
+    /*修改记录*/
+    function edit(id){
+        url="__MODULE__/PersonalRecord/addBasic?recordId="+id;
+        //alert(url);
+        var index = layer.open({
+            type: 2,
+            title: '修改档案',
+            content: url
+        });
+        layer.full(index);
+    }
+
    var recordTable=$('#table_id_example').DataTable({
         //开启服务器模式
         serverSide: true,
@@ -55,12 +81,13 @@
             { data: 'age' },
             { data: 'native_place' },
             { data: 'nation' },
+            { data: 'graduate_institutions' },
+            { data: 'degree' },
             { data: 'cellphone' },
             { data: 'political_status' },
-            { data: 'degree' },
             { data: 'id_number' },
-            { data: 'email' }
-
+            { data: 'email' },
+            { data: 'operate' }
         ],
         language: {
             "sProcessing": "处理中...",
@@ -89,7 +116,7 @@
 
     });
 
-    /*产品-添加*/
+    /*添加*/
     function product_add(title,url){
 
         url="__MODULE__/PersonalRecord/"+url;
