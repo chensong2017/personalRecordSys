@@ -8,7 +8,7 @@ Source Database       : personalrecordsys
 
 Target Server Type    : MYSQL
 Target Server Version : 50714
-File Encoding         : 65001
+File Encoding         : 65001s
 
 Date: 2017-07-04 17:22:56
 */
