@@ -54,8 +54,8 @@ class PersonalRecordController extends BaseAdminController{
     //删除记录
     public function delete(){
         $recordId=I('get.recordId');
-        $imgs=M()->where(['id'=>$recordId])->field()->select();
-        $ret1=M()->where(['id'=>$recordId])->delete();
+        //$imgs=M('personal_record')->where(['id'=>$recordId])->field('photo')->select();
+        $ret1=M('work_experience')->where(['record_id'=>$recordId])->delete();
         $ret2=M()->where(['id'=>$recordId])->delete();
         $ret3=M()->where(['id'=>$recordId])->delete();
 
@@ -84,7 +84,8 @@ class PersonalRecordController extends BaseAdminController{
         $upload->maxSize   =     3145728 ;// 设置附件上传大小
         $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
         $upload->rootPath  =     __DIR__."/../../../upload/"; // 设置附件上传根目录
-        $upload->savePath  =     ''; // 设置附件上传（子）目录
+        $upload->savePath  =     "$recordId/"; // 设置附件上传（子）目录
+        $upload->autoSub=false;
         // 上传文件
         //echo $upload->rootPath;exit();
         $info   =   $upload->upload();
