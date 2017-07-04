@@ -378,8 +378,10 @@
                             $("#addImg").attr('href','addImg?recordId='+data.recordId);
                             $("#addWork").attr('href','addWork?recordId='+data.recordId);
                             $("#addEducation").attr('href','addEducation?recordId='+data.recordId);
-                            //重新绘制表格数据
-                            window.parent.recordTable.ajax.reload();
+                            //如果是从列表出进入则重新绘制表格数据
+							if(typeof(window.parent.recordTable)!='undefined'){
+                                window.parent.recordTable.ajax.reload();
+							}
 						}
 
                     }
